@@ -32,9 +32,7 @@ if upload_file is not None:
     
     
     
-df["VOCDATE"] = pd.to_datetime(df.VOCDATE)
 
-df = df[df['VOCDATE'].dt.year == 2020]
 df=df[df["salesanalysis1"]==1]
 df.Design= df.Design.str.lower()
 df["Design"]=df["Design"].astype('category')
