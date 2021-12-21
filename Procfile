@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run streamlit_user upload.py
+web: sh setup.sh && streamlit run user_upload data.py
