@@ -55,5 +55,5 @@ if upload_file is not None:
 # In[16]:
 
     
-     st.write(rules.head(40))
+    st.write(rules.head(40))
 
