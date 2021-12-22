@@ -54,6 +54,6 @@ if upload_file is not None:
 
 # In[16]:
 
-    if st.button("submit"):
-        st.write(rules.head(40))
+    
+     st.write(rules.head(40))
 
