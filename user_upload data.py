@@ -12,17 +12,16 @@ st.title('Market Basket Analysis')
 st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
 
 upload_file=st.sidebar.file_uploader(label="upload your csv or excel file",type=["csv","xlsx"])
-result=st.button("submit")
+
 global data
-if result:
-  if upload_file is not None:
-    print(upload_file)
-    print('hello')
-    try:
-      data = pd.read_csv(upload_file)
-    except Exception as e:
-      print(e)
-      data = pd.read_excel(upload_file)
+if upload_file is not None:
+  print(upload_file)
+  print('hello')
+  try:
+    data = pd.read_csv(upload_file)
+  except Exception as e:
+    print(e)
+    data = pd.read_excel(upload_file)
     
     data["VOCDATE"] = pd.to_datetime(data.VOCDATE)
 
@@ -39,9 +38,9 @@ if result:
 
     def encode_unit(x):
         if x <= 0:
-           return 0
-       if x >= 1:
-           return 1
+            return 0
+        if x >= 1:
+            return 1
     
     basket_set = basket.applymap(encode_unit)
 
@@ -57,17 +56,4 @@ if result:
 
     st.write(rules.head(40))
 
-
-# In[17]:
-
-
-#st.write(rules.tail())
-
-
-# In[18]:
-
-
-
-
-# In[21]:
 
