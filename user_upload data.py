@@ -47,6 +47,8 @@ basket_set = basket.applymap(encode_unit)
 frequent_itemsets = apriori(basket_set, min_support=0.08, use_colnames=True)
 #print (frequent_itemsets)
 rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
+rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
+rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
 #frequent_itemsets
 
 # In[16]:
