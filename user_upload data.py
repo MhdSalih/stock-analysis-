@@ -41,7 +41,7 @@ if upload_file is not None:
     def encode_unit(x):
        if x <= 0:
           return 0
-      if x >= 1:
+       if x >= 1:
           return 1
     
     basket_set = basket.applymap(encode_unit)
