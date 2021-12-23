@@ -53,7 +53,8 @@ if upload_file is not None:
 #frequent_itemsets
 
 # In[16]:
-
-    st.download_button(label='📥 submit',
-                                data=rules)
+    with st.form(key='columns_in_form'):
+        submitted = st.form_submit_button('Submit')
+        if submit:
+            st.write(rules)
 
