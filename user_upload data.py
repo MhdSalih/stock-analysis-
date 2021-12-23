@@ -53,8 +53,6 @@ if upload_file is not None:
 #frequent_itemsets
 
 # In[16]:
-    with st.form(key='columns_in_form'):
-        submitted = st.form_submit_button('Submit')
-        if submit:
-            st.write(rules)
+    if st.button("Predict"):
+        st.success(rules)
 
