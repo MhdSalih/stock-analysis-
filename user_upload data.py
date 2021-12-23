@@ -22,37 +22,7 @@ if upload_file is not None:
     except Exception as e:
         print(e)
         data = pd.read_excel(upload_file)
-        new={'PN':"diamond pendant",
-        'RN':"diamond ring",
-        'BT':"diamond bracelet",
-        'ER':"diamond earring",
-        'BN':"diamond bangle",
-        'NK':"diamond necklace",
-        'BR':"gold bracelet",
-        'GB':"gold bracelet",
-        'GN':"diamond necklae",
-        'REP':"jewellery repairing",
-        'CUF':"diamond cufflink",
-        'GBT':"gold bracelet with color stone",
-        'DIA':"gold chain",
-        'AN':"diamond anklet", 
-        'GE':"gold earring",
-        'SUT':"diamond suiti",
-        'GPN':"gold pendant with colour stone",
-        'GER':"gold earring",
-        'RP':"platinum ring",
-        'GNK':"gold necklace",
-        'NP':"nose pin", 
-        'GBNC':'gold bangle with colour stone',
-        'GHN':"gold hand chain",
-        'BRCH':"gold brooch",
-        'GP':"gold pendant",
-        'JEW':"gold chain",
-        'GRN':"gold ring with color stone",
-        'CRN':"diamond crown",
-        'HC':"hand chain",
-        'DJEW':"cufflink", 
-        'BB':"diamond belly button"}
+    
 
     df.Design_Description= df.Design_Description.str.lower()
     df["Design"]=df["Design_Description"].astype('category')
