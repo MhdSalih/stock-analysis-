@@ -15,7 +15,7 @@ st.write("Market basket analysis is a data mining technique used by retailers to
 
 upload_file=st.sidebar.file_uploader(label="upload your csv or excel file",type=["csv","xlsx"])
 
-global data
+global rules
 if upload_file is not None:
     print(upload_file)
     print('hello')
@@ -54,6 +54,6 @@ if upload_file is not None:
 #frequent_itemsets
 
 # In[16]:
-    if st.button("submit"):
-        st.write(rules)
+if st.button("submit"):
+    st.write(rules)
 
