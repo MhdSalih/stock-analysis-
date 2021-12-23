@@ -20,10 +20,11 @@ if upload_file is not None:
     print(upload_file)
     print('hello')
     try:
-        if file_extension == 'xlsx':
-            data = pd.read_excel(file.read(), engine='openpyxl')
-        elif:
-            data = pd.read_csv(file.read())
+        data = pd.read_csv(upload_file)
+    except Exception as e:
+        print(e)
+        data = pd.read_excel(upload_file)
+        
     
     data["VOCDATE"] = pd.to_datetime(data.VOCDATE)
 
