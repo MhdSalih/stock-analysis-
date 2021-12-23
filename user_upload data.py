@@ -13,15 +13,15 @@ st.write("Market basket analysis is a data mining technique used by retailers to
 
 upload_file=st.sidebar.file_uploader(label="upload your csv or excel file",type=["csv","xlsx"])
 
-global data
+global df
 if upload_file is not None:
     print(upload_file)
     print('hello')
     try:
-        data = pd.read_csv(upload_file)
+        df = pd.read_csv(upload_file)
     except Exception as e:
         print(e)
-        data = pd.read_excel(upload_file)
+        df = pd.read_excel(upload_file)
     
 
     df.Design_Description= df.Design_Description.str.lower()
