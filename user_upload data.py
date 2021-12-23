@@ -22,15 +22,44 @@ if upload_file is not None:
     except Exception as e:
         print(e)
         data = pd.read_excel(upload_file)
-    
-    data["VOCDATE"] = pd.to_datetime(data.VOCDATE)
+        new={'PN':"diamond pendant",
+        'RN':"diamond ring",
+        'BT':"diamond bracelet",
+        'ER':"diamond earring",
+        'BN':"diamond bangle",
+        'NK':"diamond necklace",
+        'BR':"gold bracelet",
+        'GB':"gold bracelet",
+        'GN':"diamond necklae",
+        'REP':"jewellery repairing",
+        'CUF':"diamond cufflink",
+        'GBT':"gold bracelet with color stone",
+        'DIA':"gold chain",
+        'AN':"diamond anklet", 
+        'GE':"gold earring",
+        'SUT':"diamond suiti",
+        'GPN':"gold pendant with colour stone",
+        'GER':"gold earring",
+        'RP':"platinum ring",
+        'GNK':"gold necklace",
+        'NP':"nose pin", 
+        'GBNC':'gold bangle with colour stone',
+        'GHN':"gold hand chain",
+        'BRCH':"gold brooch",
+        'GP':"gold pendant",
+        'JEW':"gold chain",
+        'GRN':"gold ring with color stone",
+        'CRN':"diamond crown",
+        'HC':"hand chain",
+        'DJEW':"cufflink", 
+        'BB':"diamond belly button"}
 
-    df = data[data['VOCDATE'].dt.year == 2020]
-    df=df[df["salesanalysis1"]==1]
-    df.Design= df.Design.str.lower()
-    df["Design"]=df["Design"].astype('category')
+    df.Design_Description= df.Design_Description.str.lower()
+    df["Design"]=df["Design_Description"].astype('category')
+    df=df.replace({'Category_Code':new})
+    df['Design'] = np.where(df['Design']== "diamond",df["Category_Code"] , df['Design'])
     df["QUANTITY"]=1
-    df2=df[["VOCNO","Design","VOCDATE",'QUANTITY']]
+    df2=df[["VOCNO","Design",'QUANTITY']]
 
     basket=df2.groupby(["VOCNO","Design"])["QUANTITY"].sum().unstack().reset_index().fillna(0).set_index("VOCNO")
     basket=pd.DataFrame(basket)
