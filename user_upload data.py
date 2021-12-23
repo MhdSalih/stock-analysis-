@@ -26,8 +26,7 @@ if upload_file is not None:
 
     df["Design"]= df.Design.str.lower()
     df["Design"]=df["Design"].astype('category')
-    df=df.replace({'Category_Code':new})
-    df['Design'] = np.where(df['Design']== "diamond",df["Category_Code"] , df['Design'])
+    #df['Design'] = np.where(df['Design']== "diamond",df["Category_Code"] , df['Design'])
     df["QUANTITY"]=1
     df2=df[["VOCNO","Design",'QUANTITY']]
 
