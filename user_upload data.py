@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -15,7 +13,6 @@ st.write("Market basket analysis is a data mining technique used by retailers to
 
 upload_file=st.sidebar.file_uploader(label="upload your csv or excel file",type=["csv","xlsx"])
 
-
 global data
 if upload_file is not None:
     print(upload_file)
@@ -25,7 +22,6 @@ if upload_file is not None:
     except Exception as e:
         print(e)
         data = pd.read_excel(upload_file)
-        
     
     data["VOCDATE"] = pd.to_datetime(data.VOCDATE)
 
@@ -56,5 +52,8 @@ if upload_file is not None:
 
 # In[16]:
 
-    st.write(rules)
+
+    st.write(rules.head(40))
+
+
 
