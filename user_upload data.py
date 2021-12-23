@@ -53,6 +53,6 @@ if upload_file is not None:
 #frequent_itemsets
 
 # In[16]:
-    if st.button("Predict"):
+    if st.button("submit"):
         st.success(rules)
 
