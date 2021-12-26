@@ -6,8 +6,8 @@ from datetime import datetime
 from mlxtend.frequent_patterns import apriori, association_rules
 
 # In[15]:
-
-
+image = Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg')
+st.image(image)
 st.title('Market Basket Analysis')
 st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
 
