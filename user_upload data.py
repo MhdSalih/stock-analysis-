@@ -4,15 +4,10 @@ import numpy as np
 from apyori import apriori
 from datetime import datetime
 from mlxtend.frequent_patterns import apriori, association_rules
-from PIL import Image
 
 # In[15]:
 
-image = Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg')
-image1=Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_2_.jpg')
-first,last=st.beta_columns(2)
-first.image(image)
-last.image(image1)
+
 st.title('Market Basket Analysis')
 st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
 
@@ -57,6 +52,7 @@ if upload_file is not None:
 
 
     st.write(rules.head(40))
+
 
 
 
