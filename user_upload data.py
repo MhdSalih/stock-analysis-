@@ -52,7 +52,3 @@ if upload_file is not None:
 
 
     st.write(rules.head(40))
-
-
-
-
