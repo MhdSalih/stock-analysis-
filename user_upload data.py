@@ -4,6 +4,7 @@ import numpy as np
 from apyori import apriori
 from datetime import datetime
 from mlxtend.frequent_patterns import apriori, association_rules
+from PIL import Image
 
 # In[15]:
 image = Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg')
