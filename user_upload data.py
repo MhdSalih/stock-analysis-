@@ -8,9 +8,8 @@ from PIL import Image
 
 # In[15]:
 image = ['WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg',"WhatsApp-Image-2021-12-23-at-3.05.01-PM-_2_.jpg"]
-image_iterator = paginator( image)
-indices_on_page, images_on_page = map(list, zip(*image_iterator))
-st.image(images_on_page, width=100, caption=indices_on_page)
+st.image(image)
+
 st.title('Market Basket Analysis')
 st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
 
