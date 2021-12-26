@@ -7,7 +7,7 @@ from mlxtend.frequent_patterns import apriori, association_rules
 from PIL import Image
 
 # In[15]:
-image = Image.open['WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg',"WhatsApp-Image-2021-12-23-at-3.05.01-PM-_2_.jpg"]
+image = Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg')
 st.image(image)
 
 st.title('Market Basket Analysis')
