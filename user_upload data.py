@@ -24,31 +24,31 @@ if upload_file is not None:
         df = pd.read_excel(upload_file)
     
 
-    df["Design"]= df.Design.str.lower()
-    df["Design"]=df["Design"].astype('category')
+        df["Design"]= df.Design.str.lower()
+        df["Design"]=df["Design"].astype('category')
     #df['Design'] = np.where(df['Design']== "diamond",df["Category_Code"] , df['Design'])
-    df["QUANTITY"]=1
-    df2=df[["VOCNO","Design",'QUANTITY']]
+        df["QUANTITY"]=1
+        df2=df[["VOCNO","Design",'QUANTITY']]
 
-    basket=df2.groupby(["VOCNO","Design"])["QUANTITY"].sum().unstack().reset_index().fillna(0).set_index("VOCNO")
-    basket=pd.DataFrame(basket)
+        basket=df2.groupby(["VOCNO","Design"])["QUANTITY"].sum().unstack().reset_index().fillna(0).set_index("VOCNO")
+        basket=pd.DataFrame(basket)
 
-    def encode_unit(x):
-        if x <= 0:
-            return 0
-        if x >= 1:
-            return 1
+        def encode_unit(x):
+            if x <= 0:
+                return 0
+            if x >= 1:
+                return 1
     
-    basket_set = basket.applymap(encode_unit)
+        basket_set = basket.applymap(encode_unit)
 
-    frequent_itemsets = apriori(basket_set, min_support=0.08, use_colnames=True)
+        frequent_itemsets = apriori(basket_set, min_support=0.08, use_colnames=True)
 #print (frequent_itemsets)
-    rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
-    rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
-    rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
+        rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
+        rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
+        rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
 #frequent_itemsets
 
 # In[16]:
 
 
-    st.write(rules.head(40))
+        st.write(rules.head(40))
