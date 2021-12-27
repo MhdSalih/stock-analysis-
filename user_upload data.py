@@ -10,8 +10,9 @@ from PIL import Image
 
 image = Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg')
 image1=Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_2_.jpg')
-first,last=st.beta_columns(2)
+first,center,last=st.beta_columns(3)
 first.image(image)
+center.write("")
 last.image(image1)
 
 st.title('Market Basket Analysis')
