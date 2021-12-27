@@ -16,6 +16,37 @@ last.image(image1)
 
 st.title('Market Basket Analysis')
 st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
+new={'PN':"diamond pendant",
+'RN':"diamond ring",
+'BT':"diamond bracelet",
+'ER':"diamond earring",
+'BN':"diamond bangle",
+'NK':"diamond necklace",
+'BR':"gold bracelet",
+'GB':"gold bracelet",
+'GN':"diamond necklae",
+'REP':"jewellery repairing",
+'CUF':"diamond cufflink",
+'GBT':"gold bracelet with color stone",
+'DIA':"gold chain",
+'AN':"diamond anklet", 
+'GE':"gold earring",
+'SUT':"diamond suiti",
+'GPN':"gold pendant with colour stone",
+'GER':"gold earring",
+'RP':"platinum ring",
+'GNK':"gold necklace",
+'NP':"nose pin", 
+'GBNC':'gold bangle with colour stone',
+'GHN':"gold hand chain",
+'BRCH':"gold brooch",
+'GP':"gold pendant",
+'JEW':"gold chain",
+'GRN':"gold ring with color stone",
+'CRN':"diamond crown",
+'HC':"hand chain",
+'DJEW':"cufflink", 
+'BB':"diamond belly button"}
 
 upload_file=st.sidebar.file_uploader(label="upload your csv or excel file",type=["csv","xlsx"])
 
@@ -32,7 +63,8 @@ if upload_file is not None:
 
     df["Design"]= df.Design.str.lower()
     df["Design"]=df["Design"].astype('category')
-    #df['Design'] = np.where(df['Design']== "diamond",df["Category_Code"] , df['Design'])
+    df=df.replace({'Category_Code':new})
+    df['Design'] = np.where(df['Design']== "diamond",df["Category_Code"] , df['Design'])
     df["QUANTITY"]=1
     df2=df[["VOCNO","Design",'QUANTITY']]
 
