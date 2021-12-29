@@ -49,7 +49,7 @@ new={'PN':"diamond pendant",
 'DJEW':"cufflink", 
 'BB':"diamond belly button"}
 
-upload_file=st.sidebar.file_uploader(label="upload your csv or excel file",type=["csv","xlsx"])
+upload_file=st.sidebar.file_uploader(label="Upload your csv or excel file",type=["csv","xlsx"])
 
 global df
 if upload_file is not None:
