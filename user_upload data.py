@@ -86,7 +86,7 @@ if upload_file is not None:
     rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
     rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
     rules.columns = map(str.upper, rules.columns)
-    rules = rules.style.set_properties(**{'text-align': 'left'})
+    
 #frequent_itemsets
 
 # In[16]:
