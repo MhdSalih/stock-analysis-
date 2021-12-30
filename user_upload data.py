@@ -86,7 +86,11 @@ if upload_file is not None:
     rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
     rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
     rules.columns = map(str.upper, rules.columns)
-    
+    st.markdown(
+    """<style>
+        .rules {text-align: left !important}
+    </style>
+    """, unsafe_allow_html=True) 
     
 #frequent_itemsets
 
