@@ -89,7 +89,7 @@ if upload_file is not None:
     st.rules(df.style.applymap(left_align)) 
     st.markdown(
     """<style>
-        .rules {text-align: left !important}
+        .dataframe {text-align: left !important}
     </style>
     """, unsafe_allow_html=True) 
     
