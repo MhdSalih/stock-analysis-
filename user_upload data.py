@@ -88,7 +88,7 @@ if upload_file is not None:
     rules.columns = map(str.upper, rules.columns)
     st.markdown(
     """<style>
-        .rules {text-align: center !important}
+        .dataframe {text-align: center !important}
     </style>
     """, unsafe_allow_html=True) 
     
