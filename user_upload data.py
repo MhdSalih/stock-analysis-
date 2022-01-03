@@ -15,7 +15,7 @@ first.image(image)
 center.write("")
 last.image(image1)
 with open('analysis data.csv', 'rb') as my_file:
-    st.download_button(label = 'Download', data = my_file, file_name = 'filename.xlsx', mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
+    st.download_button(label = 'Download', data = my_file, mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
 
 st.title('Market Basket Analysis')
 st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
