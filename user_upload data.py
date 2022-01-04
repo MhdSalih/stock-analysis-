@@ -16,8 +16,8 @@ center.write("")
 last.image(image1)
 data1 =pd.DataFrame({
              
-             "":["antecedent","consequent","support"],
-             "":["item found within the data","item found in combination with the antecedent","the frequencey of occurane of the item "]
+             "i":["antecedent","consequent","support"],
+             "ii":["item found within the data","item found in combination with the antecedent","the frequencey of occurane of the item "]
              })  
 st.write(data1)
 #with open('analysis data.csv', 'rb') as my_file:
