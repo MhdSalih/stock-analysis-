@@ -29,7 +29,7 @@ st.write("----------------------------------------------------------------------
 st.write("antecedent  : item found within the data")
 st.write("consequent  : item found in combination with the antecedent")
 st.write("support     : the frequencey of occurane of the item")
-st.write("confidence  : how likley item y is purchased with item x is purchased ")
+st.write("confidence  : how likley item 'y' is purchased with item 'x'  ")
 st.write("lift        : lift compare which way a product sold more whether it is in pair or individually")
 
 new={'PN':"diamond pendant",
