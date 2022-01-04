@@ -15,9 +15,9 @@ first.image(image)
 center.write("")
 last.image(image1)
 data1 =pd.DataFrame({
-             "antecedent":"item found within the data",
-             "consequent":"item found in combination with the antecedent",
-             "support":"the frequencey of occurane of the item ",
+             "id":[1,2,3],
+             "exp":["antecedent","consequent","support"],
+             "vp":["item found within the data","item found in combination with the antecedent","the frequencey of occurane of the item "]
              })  
 #with open('analysis data.csv', 'rb') as my_file:
 #    st.download_button(label = 'Download', data = my_file, mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
