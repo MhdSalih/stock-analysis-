@@ -19,6 +19,7 @@ data1 =pd.DataFrame({
              "exp":["antecedent","consequent","support"],
              "vp":["item found within the data","item found in combination with the antecedent","the frequencey of occurane of the item "]
              })  
+st.write(data1)
 #with open('analysis data.csv', 'rb') as my_file:
 #    st.download_button(label = 'Download', data = my_file, mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
 
