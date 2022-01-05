@@ -73,9 +73,7 @@ if upload_file is not None:
     print('hello')
     try:
         df = pd.read_csv(upload_file)
-    except Exception as e:
-        print(e)
-        df = pd.read_excel(upload_file)
+   
     
 
     df["Design"]= df.Design.str.lower()
