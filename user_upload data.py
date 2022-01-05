@@ -27,8 +27,8 @@ st.write("Market basket analysis is a data mining technique used by retailers to
 st.write("----------------------------------------------------------------------------------------")
 st.write("An association rule has two parts: an antecedent (if) and a consequent (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
 #st.write("**consequent**  : item found in combination with the antecedent")
-st.write("**support**     : the frequencey of occurane of the item")
-st.write("**confidence**  : how likley item 'y' is purchased with item 'x'  ")
+st.write("**support**     : Support is an indication of how frequently the items appear in the data. It refers to how often a given rule appears in the database being mined.")
+st.write("**confidence**  : Confidence indicates the number of times the if-then statements are found true.Confidence refers to the amount of times a given rule turns out to be true in practice. A rule may show a strong correlation in a data set because it appears very often but may occur far less when applied. This would be a case of high support, but low confidence.Conversely, a rule might not particularly stand out in a data set, but continued analysis shows that it occurs very frequently. This would be a case of high confidence and low support. Using these measures helps analysts separate causation from correlation, and allows them to properly value a given rule. ")
 st.write("**lift**        : lift compare which way a product sold more whether it is in pair or individually")
 
 new={'PN':"diamond pendant",
