@@ -16,9 +16,7 @@ center.write("")
 last.image(image1)
 data=pd.read_csv("analysis data.csv")
 check1 = st.sidebar.button("sample template")
-if check1:
-    st.write(data.head(10))
-            
+
 #st.download_button(
  #    label="Download data as CSV",
   #   data=data,
@@ -116,4 +114,5 @@ if upload_file is not None:
 
 
     st.write(rules.head(40))
-    
+    if check1:
+        st.write(data.head(10))
