@@ -71,9 +71,11 @@ global df
 if upload_file is not None:
     print(upload_file)
     print('hello')
-    else:
+    try:
         df = pd.read_csv(upload_file)
-   
+    except Exception as e:
+        print(e)
+     
     
 
     df["Design"]= df.Design.str.lower()
