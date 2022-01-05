@@ -16,7 +16,8 @@ center.write("")
 last.image(image1)
 data=pd.read_csv("analysis data.csv")
 check1 = st.sidebar.button("sample template")
-
+if check1:
+    st.write(data(10))
             
 #st.download_button(
  #    label="Download data as CSV",
