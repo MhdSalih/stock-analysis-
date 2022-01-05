@@ -116,5 +116,4 @@ if upload_file is not None:
 
 
     st.write(rules.head(40))
-    if check1:
-            st.write(data(10))
+    
