@@ -71,7 +71,7 @@ global df
 if upload_file is not None:
     print(upload_file)
     print('hello')
-    try:
+    else:
         df = pd.read_csv(upload_file)
    
     
