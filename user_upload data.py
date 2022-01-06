@@ -15,6 +15,25 @@ first.image(image)
 center.write("")
 last.image(image1)
 data=pd.read_csv("analysis data.csv")
+
+
+
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    workbook = writer.book
+    worksheet = writer.sheets['Sheet1']
+    format1 = workbook.add_format({'num_format': '0.00'}) 
+    worksheet.set_column('A:A', None, format1)  
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
+
+df_xlsx = to_excel(data)
+st.download_button(label='📥 Download sample template',
+                                data=df_xlsx ,
+                                file_name= 'df_test.xlsx')
 #check1 = st.sidebar.button("sample template")
 
 st.download_button(
