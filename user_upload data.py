@@ -7,6 +7,7 @@ from mlxtend.frequent_patterns import apriori, association_rules
 from PIL import Image
 from io import BytesIO
 import xlsxwriter
+import base64
 
 # In[15]:
 
@@ -17,26 +18,13 @@ first.image(image)
 center.write("")
 last.image(image1)
 data=pd.read_csv("analysis data.csv")
+def st_csv_download_button(df):
+    csv = df.to_csv(index=False) #if no filename is given, a string is returned
+    b64 = base64.b64encode(csv.encode()).decode()
+    href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a>'
+    st.markdown(href, unsafe_allow_html=True)  
 
-
-
-def to_excel(df):
-    output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, index=False, sheet_name='Sheet1')
-    workbook = writer.book
-    worksheet = writer.sheets['Sheet1']
-    format1 = workbook.add_format({'num_format': '0.00'}) 
-    worksheet.set_column('A:A', None, format1)  
-    writer.save()
-    processed_data = output.getvalue()
-    return processed_data
-
-
-df_xlsx = pd.read_csv(BytesIO(data), encoding="latin1")
-st.download_button(label='📥 Download sample template',
-                                data=df_xlsx ,
-                                file_name= 'df_test.xlsx')
+st_csv_download_button(data)    
 #check1 = st.sidebar.button("sample template")
 
 st.download_button(
