@@ -21,7 +21,7 @@ data=pd.read_csv("analysis data.csv")
 def st_csv_download_button(df):
     csv = df.to_csv(index=False) #if no filename is given, a string is returned
     b64 = base64.b64encode(csv.encode()).decode()
-    href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a>'
+    href = f'<a href="data:file/csv;base64,{b64}">Download Sample Template</a>'
     st.sidebar.markdown(href, unsafe_allow_html=True)  
 
 st_csv_download_button(data)    
@@ -106,7 +106,9 @@ if upload_file is not None:
     rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
     rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
     rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
+    rules.sort_values("confidence", inplace=True)
     rules.columns = map(str.upper, rules.columns)
+    
     st.markdown(
     """<style>
         .dataframe {text-align: left !important}
