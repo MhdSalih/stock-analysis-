@@ -15,7 +15,7 @@ first.image(image)
 center.write("")
 last.image(image1)
 data=pd.read_csv("analysis data.csv")
-check1 = st.sidebar.button("sample template")
+#check1 = st.sidebar.button("sample template")
 
 #st.download_button(
  #    label="Download data as CSV",
@@ -32,8 +32,8 @@ st.write("An association rule has two parts: an **antecedent** (if) and a **cons
 st.write("**support**     : Support is an indication of how frequently the items appear in the data. It refers to how often a given rule appears in the database being mined.")
 st.write("**confidence**  : Confidence indicates the number of times the if-then statements are found true.Confidence refers to the amount of times a given rule turns out to be true in practice. A rule may show a strong correlation in a data set because it appears very often but may occur far less when applied. This would be a case of high support, but low confidence.Conversely, a rule might not particularly stand out in a data set, but continued analysis shows that it occurs very frequently. This would be a case of high confidence and low support. Using these measures helps analysts separate causation from correlation, and allows them to properly value a given rule. ")
 st.write("**lift**        : lift can be used to compare confidence with expected confidence, or how many times an if-then statement is expected to be found true. It is the ratio of confidence to support. If the lift value is a negative value, then there is a negative correlation between datapoints. If the value is positive, there is a positive correlation, and if the ratio equals 1, then there is no correlation.")
-if check1:
-        st.write(data.head(10))
+#if check1:
+ #       st.write(data.head(10))
 new={'PN':"diamond pendant",
 'RN':"diamond ring",
 'BT':"diamond bracelet",
