@@ -5,6 +5,7 @@ from apyori import apriori
 from datetime import datetime
 from mlxtend.frequent_patterns import apriori, association_rules
 from PIL import Image
+from io import BytesIO
 
 # In[15]:
 
