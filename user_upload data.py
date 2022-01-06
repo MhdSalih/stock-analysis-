@@ -106,6 +106,7 @@ if upload_file is not None:
     rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
     rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
     rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
+    rules=rules.head(40)
     rules= rules.sort_values(by = 'confidence', ascending = False)
     rules.columns = map(str.upper, rules.columns)
     
@@ -120,7 +121,7 @@ if upload_file is not None:
 # In[16]:
 
 
-    st.write(rules.head(40))
+    st.write(rules)
     st.write("An association rule has two parts: an **antecedent** (if) and a **consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
     #st.write("**consequent**  : item found in combination with the antecedent")
     st.write("**support**     : Support is an indication of how frequently the items appear in the data. It refers to how often a given rule appears in the database being mined.")
