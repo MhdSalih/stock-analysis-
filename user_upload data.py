@@ -106,7 +106,7 @@ if upload_file is not None:
     rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
     rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
     rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
-    rules.sort_values("confidence", inplace=True)
+    rules= rules.sort_values(by = 'confidence', ascending = False)
     rules.columns = map(str.upper, rules.columns)
     
     st.markdown(
