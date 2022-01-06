@@ -6,6 +6,7 @@ from datetime import datetime
 from mlxtend.frequent_patterns import apriori, association_rules
 from PIL import Image
 from io import BytesIO
+import xlsxwriter
 
 # In[15]:
 
