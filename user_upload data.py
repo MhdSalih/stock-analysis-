@@ -33,7 +33,7 @@ def to_excel(df):
     return processed_data
 
 
-df_xlsx = pd.read_csv(BytesIO(data), encoding="latin1"))
+df_xlsx = pd.read_csv(BytesIO(data), encoding="latin1")
 st.download_button(label='📥 Download sample template',
                                 data=df_xlsx ,
                                 file_name= 'df_test.xlsx')
