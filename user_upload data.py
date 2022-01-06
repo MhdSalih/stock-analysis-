@@ -10,19 +10,19 @@ from PIL import Image
 
 image = Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg')
 image1=Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_2_.jpg')
-first,center,last=st.beta_columns(3)
+first,center,last=st.columns(3)
 first.image(image)
 center.write("")
 last.image(image1)
 data=pd.read_csv("analysis data.csv")
 #check1 = st.sidebar.button("sample template")
 
-#st.download_button(
- #    label="Download data as CSV",
-  #   data=data,
-   #  file_name='large_df.csv',
-    # mime='text/csv',
- #)
+st.download_button(
+     label="Download data as CSV",
+     data=data,
+     file_name='large_df.csv',
+     mime='text/csv',
+ )
              
 st.title('Market Basket Analysis')
 st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
