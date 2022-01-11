@@ -150,14 +150,15 @@ if upload_file is not None:
     
     fig=plt.figure(figsize=(3,5))
     parallel_coordinates(coords, 'rule')
-    plt.legend([])
+    #plt.legend([])
     plt.grid(True)
+    plt.title('graph', fontsize=25)
     st.pyplot(fig)
     st.write(" ")
     
     fig2=plt.figure(figsize=(12,7))
     sns.scatterplot(x = "support", y = "confidence", 
-                   size = "lift", data = rules).set(title="Optimality of the support-confidence border",fontsize=20)
+                   size = "lift", data = rules).set(title="Optimality of the support-confidence border")
 
     plt.margins(0.01,0.01)
     #st.write("**Optimality of the support-confidence border**")
