@@ -9,6 +9,8 @@ from io import BytesIO
 import xlsxwriter
 import base64
 import matplotlib.pyplot as plt
+import seaborn as sns
+
 
 # In[15]:
 
@@ -151,6 +153,12 @@ if upload_file is not None:
     plt.legend([])
     plt.grid(True)
     st.pyplot(fig)
+    
+    fig2=plt.figure(figsize=(10,6))
+    sns.scatterplot(x = "support", y = "confidence", 
+                   size = "lift", data = rules)
+    plt.margins(0.01,0.01)
+    st.pyplot(fig2)
     
     st.write("An association rule has two parts: an **antecedent** (if) and a **consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
     #st.write("**consequent**  : item found in combination with the antecedent")
