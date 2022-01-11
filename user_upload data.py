@@ -155,6 +155,8 @@ if upload_file is not None:
     plt.title(' parallel coordinates to visualize rules', fontsize=15,color="blue")
     st.pyplot(fig)
     st.write(" ")
+    st.write(" ")
+    st.write("----------------------------------------------------------------- ")
     
     fig2=plt.figure(figsize=(12,7))
     plt.title('Optimality of the support-confidence border ', fontsize=25,color="blue")
