@@ -152,7 +152,7 @@ if upload_file is not None:
     parallel_coordinates(coords, 'rule')
     plt.legend([])
     plt.grid(True)
-    plt.title(' parallel coordinates to visualize rules', fontsize=20)
+    plt.title(' parallel coordinates to visualize rules', fontsize=20,color="cyan")
     st.pyplot(fig)
     st.write(" ")
     
