@@ -157,7 +157,7 @@ if upload_file is not None:
     st.write(" ")
     
     fig2=plt.figure(figsize=(12,7))
-    plt.title('Optimality of the support-confidence border ', fontsize=20,color="blue")
+    plt.title('Optimality of the support-confidence border ', fontsize=25,color="blue")
     sns.scatterplot(x = "support", y = "confidence", 
                    size = "lift", data = rules)#.set(title="Optimality of the support-confidence border")
 
