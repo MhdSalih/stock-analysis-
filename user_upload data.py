@@ -148,7 +148,7 @@ if upload_file is not None:
 
     # Generate parallel coordinates plot
     
-    fig=plt.figure(figsize=(12,7))
+    fig=plt.figure(figsize=(4,7))
     parallel_coordinates(coords, 'rule')
     plt.legend([])
     plt.grid(True)
