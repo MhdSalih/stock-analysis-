@@ -130,6 +130,7 @@ if upload_file is not None:
 
 
     st.write(rules)
+    st.write("----------------------------------------------------------------------------------------")
     from pandas.plotting import parallel_coordinates
 
     # Compute the frequent itemsets
