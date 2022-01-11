@@ -154,7 +154,7 @@ if upload_file is not None:
     plt.grid(True)
     st.pyplot(fig)
     
-    fig2=plt.figure(figsize=(10,6))
+    fig2=plt.figure(figsize=(12,7))
     sns.scatterplot(x = "support", y = "confidence", 
                    size = "lift", data = rules)
     plt.margins(0.01,0.01)
