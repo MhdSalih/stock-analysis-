@@ -102,6 +102,13 @@ if upload_file is not None:
     basket_set = basket.applymap(encode_unit)
 
     frequent_itemsets = apriori(basket_set, min_support=0.08, use_colnames=True)
+    
+    def rules_to_coordinates(rules):
+        rules['antecedent'] = rules['antecedents'].apply(lambda antecedent: list(antecedent)[0])
+        rules['consequent'] = rules['consequents'].apply(lambda consequent: list(consequent)[0])
+        rules['rule'] = rules.index
+        return rules[['antecedent','consequent','rule']]
+
 #print (frequent_itemsets)
     rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
     rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
@@ -122,6 +129,26 @@ if upload_file is not None:
 
 
     st.write(rules)
+    from pandas.plotting import parallel_coordinates
+
+    # Compute the frequent itemsets
+    #frequent_itemsets = apriori(onehot, min_support = 0.15, 
+    #                           use_colnames = True, max_len = 2)
+
+    # Compute rules from the frequent itemsets
+    rules = association_rules(frequent_itemsets, metric = 'confidence', 
+                              min_threshold = 0.55)
+
+    # Convert rules into coordinates suitable for use in a parallel coordinates plot
+    coords = rules_to_coordinates(rules.head(40))
+
+    # Generate parallel coordinates plot
+    plt.figure(figsize=(4,8))
+    parallel_coordinates(coords, 'rule')
+    plt.legend([])
+    plt.grid(True)
+    plt.show()
+    
     st.write("An association rule has two parts: an **antecedent** (if) and a **consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
     #st.write("**consequent**  : item found in combination with the antecedent")
     st.write("**support**     : Support is an indication of how frequently the items appear in the data. It refers to how often a given rule appears in the database being mined.")
