@@ -8,6 +8,7 @@ from PIL import Image
 from io import BytesIO
 import xlsxwriter
 import base64
+import matplotlib.pyplot as plt
 
 # In[15]:
 
