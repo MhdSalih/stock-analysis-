@@ -144,11 +144,12 @@ if upload_file is not None:
     coords = rules_to_coordinates(rules.head(40))
 
     # Generate parallel coordinates plot
-    plt.figure(figsize=(4,8))
+    
+    fig=plt.figure(figsize=(4,8))
     parallel_coordinates(coords, 'rule')
     plt.legend([])
     plt.grid(True)
-    plt.show()
+    st.pyplot(fig)
     
     st.write("An association rule has two parts: an **antecedent** (if) and a **consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
     #st.write("**consequent**  : item found in combination with the antecedent")
