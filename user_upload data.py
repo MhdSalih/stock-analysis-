@@ -28,7 +28,7 @@ def st_csv_download_button(df):
     href = f'<a href="data:file/csv;base64,{b64}">Download Sample Template</a>'
     st.sidebar.markdown(href, unsafe_allow_html=True)  
 
-st_csv_download_button(data)    
+#st_csv_download_button(data)    
 #check1 = st.sidebar.button("sample template")
 
 
@@ -75,7 +75,7 @@ new={'PN':"diamond pendant",
 'BB':"diamond belly button"}
 
 upload_file=st.sidebar.file_uploader(label="Upload your csv or excel file",type=["csv","xlsx"])
-
+st_csv_download_button(data)  
 global df
 if upload_file is not None:
     print(upload_file)
