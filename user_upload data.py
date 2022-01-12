@@ -156,6 +156,7 @@ if upload_file is not None:
     plt.grid(True)
     plt.title(' parallel coordinates to visualize rules', fontsize=15,color="blue",loc='left')
     #st.write("**parallel coordinates to visualize rules**")
+    st.write(" ")
     st.pyplot(fig)
     st.write(" ")
     st.write(" ")
@@ -169,6 +170,7 @@ if upload_file is not None:
 
     plt.margins(0.01,0.01)
     #st.write("**Optimality of the support-confidence border**")
+    st.write(" ")
     st.pyplot(fig2)
     
     st.write("An association rule has two parts: an **Antecedent** (if) and a **Consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
