@@ -10,6 +10,7 @@ import xlsxwriter
 import base64
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly.express as px
 
 
 # In[15]:
@@ -119,6 +120,7 @@ if upload_file is not None:
     rules=rules.head(40)
     rules= rules.sort_values(by = 'confidence', ascending = False)
     rules.columns = map(str.upper, rules.columns)
+    rules.style.set_table_styles([dict(selector="th",props=[('max-width', '50px')])])
     
     st.markdown(
     """<style>
