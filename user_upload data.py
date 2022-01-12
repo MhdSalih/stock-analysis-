@@ -154,20 +154,21 @@ if upload_file is not None:
     parallel_coordinates(coords, 'rule')
     plt.legend([])
     plt.grid(True)
-    #plt.title(' parallel coordinates to visualize rules', fontsize=15,color="blue")
-    st.write("**parallel coordinates to visualize rules**")
+    plt.title(' parallel coordinates to visualize rules', fontsize=15,color="blue",loc='left')
+    #st.write("**parallel coordinates to visualize rules**")
     st.pyplot(fig)
     st.write(" ")
     st.write(" ")
     st.write("----------------------------------------------------------------- ")
     
     fig2=plt.figure(figsize=(12,7))
-    #plt.title('Optimality of the support-confidence border ', fontsize=25,color="blue")
+    #plt.title('Left Title', loc='left')
+    plt.title('Optimality of the support-confidence border ', fontsize=25,color="blue",loc='left')
     sns.scatterplot(x = "support", y = "confidence", 
                    size = "lift", data = rules)#.set(title="Optimality of the support-confidence border")
 
     plt.margins(0.01,0.01)
-    st.write("**Optimality of the support-confidence border**")
+    #st.write("**Optimality of the support-confidence border**")
     st.pyplot(fig2)
     
     st.write("An association rule has two parts: an **Antecedent** (if) and a **Consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
