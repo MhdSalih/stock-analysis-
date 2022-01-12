@@ -154,24 +154,25 @@ if upload_file is not None:
     parallel_coordinates(coords, 'rule')
     plt.legend([])
     plt.grid(True)
-    plt.title(' parallel coordinates to visualize rules', fontsize=15,color="blue")
+    #plt.title(' parallel coordinates to visualize rules', fontsize=15,color="blue")
+    st.write("**parallel coordinates to visualize rules**")
     st.pyplot(fig)
     st.write(" ")
     st.write(" ")
     st.write("----------------------------------------------------------------- ")
     
     fig2=plt.figure(figsize=(12,7))
-    plt.title('Optimality of the support-confidence border ', fontsize=25,color="blue")
+    #plt.title('Optimality of the support-confidence border ', fontsize=25,color="blue")
     sns.scatterplot(x = "support", y = "confidence", 
                    size = "lift", data = rules)#.set(title="Optimality of the support-confidence border")
 
     plt.margins(0.01,0.01)
-    #st.write("**Optimality of the support-confidence border**")
+    st.write("**Optimality of the support-confidence border**")
     st.pyplot(fig2)
     
-    st.write("An association rule has two parts: an **antecedent** (if) and a **consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
-    #st.write("**consequent**  : item found in combination with the antecedent")
-    st.write("**support**     : Support is an indication of how frequently the items appear in the data. It refers to how often a given rule appears in the database being mined.")
-    st.write("**confidence**  : Confidence indicates the number of times the if-then statements are found true.Confidence refers to the amount of times a given rule turns out to be true in practice. A rule may show a strong correlation in a data set because it appears very often but may occur far less when applied. This would be a case of high support, but low confidence.Conversely, a rule might not particularly stand out in a data set, but continued analysis shows that it occurs very frequently. This would be a case of high confidence and low support. Using these measures helps analysts separate causation from correlation, and allows them to properly value a given rule. ")
-    st.write("**lift**        : lift can be used to compare confidence with expected confidence, or how many times an if-then statement is expected to be found true. It is the ratio of confidence to support. If the lift value is a negative value, then there is a negative correlation between datapoints. If the value is positive, there is a positive correlation, and if the ratio equals 1, then there is no correlation.")
+    st.write("An association rule has two parts: an **Antecedent** (if) and a **Consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
+    #st.write("**Consequent**  : item found in combination with the antecedent")
+    st.write("**Support**     : Support is an indication of how frequently the items appear in the data. It refers to how often a given rule appears in the database being mined.")
+    st.write("**Confidence**  : Confidence indicates the number of times the if-then statements are found true.Confidence refers to the amount of times a given rule turns out to be true in practice. A rule may show a strong correlation in a data set because it appears very often but may occur far less when applied. This would be a case of high support, but low confidence.Conversely, a rule might not particularly stand out in a data set, but continued analysis shows that it occurs very frequently. This would be a case of high confidence and low support. Using these measures helps analysts separate causation from correlation, and allows them to properly value a given rule. ")
+    st.write("**Lift**        : lift can be used to compare confidence with expected confidence, or how many times an if-then statement is expected to be found true. It is the ratio of confidence to support. If the lift value is a negative value, then there is a negative correlation between datapoints. If the value is positive, there is a positive correlation, and if the ratio equals 1, then there is no correlation.")
 
