@@ -32,7 +32,7 @@ def st_csv_download_button(df):
 #check1 = st.sidebar.button("sample template")
 
 st.markdown(""" <style> .font {
-font-size:50px ; font-family: 'Cooper Black'; color: #FF9633;} 
+font-size:50px ; font-family: 'calibri'; color: #0094cb;} 
 </style> """, unsafe_allow_html=True)
 st.markdown('<p class="font">Market Basket Analysis</p>', unsafe_allow_html=True)
 #st.title('Market Basket Analysis')
