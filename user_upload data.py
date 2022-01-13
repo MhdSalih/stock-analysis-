@@ -157,7 +157,7 @@ if upload_file is not None:
     parallel_coordinates(coords, 'rule')
     plt.legend([])
     plt.grid(True)
-    plt.title(' parallel coordinates to visualize rules', fontsize=15,color="blue",loc='left')
+    plt.title(' Parallel coordinates to visualize rules', fontsize=15,color="#0094cb",loc='left')
     #st.write("**parallel coordinates to visualize rules**")
     st.write(" ")
     st.pyplot(fig)
@@ -167,7 +167,7 @@ if upload_file is not None:
     
     fig2=plt.figure(figsize=(12,7))
     #plt.title('Left Title', loc='left')
-    plt.title('Optimality of the support-confidence border ', fontsize=25,color="blue",loc='left')
+    plt.title('Optimality of the support-confidence border ', fontsize=25,color="#0094cb",loc='left')
     sns.scatterplot(x = "support", y = "confidence", 
                    size = "lift", data = rules)#.set(title="Optimality of the support-confidence border")
 
