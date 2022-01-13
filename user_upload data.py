@@ -10,7 +10,7 @@ import xlsxwriter
 import base64
 import matplotlib.pyplot as plt
 import seaborn as sns
-from st_aggrid import AgGrid
+#from st_aggrid import AgGrid
 #import plotly.express as px
 
 
@@ -129,8 +129,8 @@ if upload_file is not None:
     rules= rules.sort_values(by = 'confidence', ascending = False)
     rules.columns = map(str.upper, rules.columns)
     rules= rules.iloc[:, :-2]
-    rules.style.set_table_styles([dict(selector="th",props=[('max-width', '50px')])])
-    AgGrid(rules, fit_columns_on_grid_load=True)
+    rules.style.set_table_styles([dict(selector="th",props=[('max-width', '30px')])])
+    #AgGrid(rules, fit_columns_on_grid_load=True)
     
     st.markdown(
     """<style>
