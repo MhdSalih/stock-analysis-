@@ -130,7 +130,7 @@ if upload_file is not None:
     rules.columns = map(str.upper, rules.columns)
     rules= rules.iloc[:, :-2]
     rules.style.set_table_styles([dict(selector="th",props=[('max-width', '50px')])])
-    AgGrid(rules, height=500, fit_columns_on_grid_load=True)
+    AgGrid(rules, fit_columns_on_grid_load=True)
     
     st.markdown(
     """<style>
