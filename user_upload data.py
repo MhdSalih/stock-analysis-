@@ -36,7 +36,7 @@ font-size:50px ; font-family: 'calibri'; color: #0094cb;}
 </style> """, unsafe_allow_html=True)
 st.markdown('<p class="font">Market Basket Analysis</p>', unsafe_allow_html=True)
 #st.title('Market Basket Analysis')
-t.markdown(""" <style> .font {
+st.markdown(""" <style> .font {
 font-size:11px ; font-family: 'calibri'; color: #f48220;} 
 </style> """, unsafe_allow_html=True)
 st.markdown('<p class="font">Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.</p>', unsafe_allow_html=True)
