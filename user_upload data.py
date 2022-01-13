@@ -129,7 +129,11 @@ if upload_file is not None:
     rules= rules.sort_values(by = 'confidence', ascending = False)
     rules.columns = map(str.upper, rules.columns)
     rules= rules.iloc[:, :-2]
-    rules.style.set_table_styles([dict(selector="th",props=[('max-width', '30px')])])
+    def colfix(df, L=5):
+        return df.rename(columns=lambda x: ' '.join(x.replace('_', ' ')[i:i+L] for i in range(0,len(x),L)) if df[x].dtype in ['float64','int64'] else x )
+
+    colfix(rules)
+    #rules.style.set_table_styles([dict(selector="th",props=[('max-width', '30px')])])
     #AgGrid(rules, fit_columns_on_grid_load=True)
     
     st.markdown(
