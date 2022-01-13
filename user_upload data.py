@@ -36,7 +36,11 @@ font-size:50px ; font-family: 'calibri'; color: #0094cb;}
 </style> """, unsafe_allow_html=True)
 st.markdown('<p class="font">Market Basket Analysis</p>', unsafe_allow_html=True)
 #st.title('Market Basket Analysis')
-st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
+t.markdown(""" <style> .font {
+font-size:11px ; font-family: 'calibri'; color: #f48220;} 
+</style> """, unsafe_allow_html=True)
+st.markdown('<p class="font">Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.</p>', unsafe_allow_html=True)
+#st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
 st.write("----------------------------------------------------------------------------------------")
 #st.write("An association rule has two parts: an **antecedent** (if) and a **consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
 #st.write("**consequent**  : item found in combination with the antecedent")
