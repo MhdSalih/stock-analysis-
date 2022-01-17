@@ -129,7 +129,7 @@ if upload_file is not None:
     rules= rules.sort_values(by = 'confidence', ascending = False)
     rules.columns = map(str.upper, rules.columns)
     rules= rules.iloc[:, :-2]
-    rules=rules.style.set_properties(subset=rules.columns, **{'text-align':'left','font-family': 'calibri','font-size': '10px'})
+    #rules=rules.style.set_properties(subset=rules.columns, **{'text-align':'left','font-family': 'calibri','font-size': '10px'})
     #rules = rules.style.set_properties(**{
      #       'background-color': 'grey',
       #      'font-size': '10pt',
