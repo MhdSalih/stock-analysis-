@@ -129,6 +129,10 @@ if upload_file is not None:
     rules= rules.sort_values(by = 'confidence', ascending = False)
     rules.columns = map(str.upper, rules.columns)
     rules= rules.iloc[:, :-2]
+    rules = rules.style.set_properties(**{
+            'background-color': 'grey',
+            'font-size': '10pt',
+    })
     #def colfix(df, L=5):
     #    return df.rename(columns=lambda x: ' '.join(x.replace('_', ' ')[i:i+L] for i in range(0,len(x),L)) if df[x].dtype in ['float64','int64'] else x )
 
