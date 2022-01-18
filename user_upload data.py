@@ -163,7 +163,7 @@ if upload_file is not None:
     #                           use_colnames = True, max_len = 2)
 
     # Compute rules from the frequent itemsets
-    rules = association_rules(frequent_itemsets, metric = 'Confidence', 
+    rules = association_rules(frequent_itemsets, metric = 'confidence', 
                               min_threshold = 0.55)
 
     # Convert rules into coordinates suitable for use in a parallel coordinates plot
@@ -186,8 +186,8 @@ if upload_file is not None:
     fig2=plt.figure(figsize=(12,7))
     #plt.title('Left Title', loc='left')
     plt.title('Optimality of the support-confidence border ', fontsize=25,color="#0094cb",loc='left')
-    sns.scatterplot(x = "Support", y = "Confidence", 
-                   size = "Lift", data = rules)#.set(title="Optimality of the support-confidence border")
+    sns.scatterplot(x = "Support", y = "confidence", 
+                   size = "lift", data = rules)#.set(title="Optimality of the support-confidence border")
 
     plt.margins(0.01,0.01)
     #st.write("**Optimality of the support-confidence border**")
