@@ -127,8 +127,10 @@ if upload_file is not None:
     rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
     rules=rules.head(40)
     rules= rules.sort_values(by = 'confidence', ascending = False)
-    rules.columns = map(str.upper, rules.columns)
+    #rules.columns = map(str.upper, rules.columns)
+    rules.columns =["Antecedents","Consequents",'AntecedentSupport','ConsequentSupport',"Support","Confidence","Lift","Leverage","Conviction"]
     rules= rules.iloc[:, :-2]
+    
     #rules=rules.style.set_properties(subset=rules.columns, **{'text-align':'left','font-family': 'calibri','font-size': '10px'})
     #rules = rules.style.set_properties(**{
      #       'background-color': 'grey',
@@ -161,7 +163,7 @@ if upload_file is not None:
     #                           use_colnames = True, max_len = 2)
 
     # Compute rules from the frequent itemsets
-    rules = association_rules(frequent_itemsets, metric = 'confidence', 
+    rules = association_rules(frequent_itemsets, metric = 'Confidence', 
                               min_threshold = 0.55)
 
     # Convert rules into coordinates suitable for use in a parallel coordinates plot
@@ -184,8 +186,8 @@ if upload_file is not None:
     fig2=plt.figure(figsize=(12,7))
     #plt.title('Left Title', loc='left')
     plt.title('Optimality of the support-confidence border ', fontsize=25,color="#0094cb",loc='left')
-    sns.scatterplot(x = "support", y = "confidence", 
-                   size = "lift", data = rules)#.set(title="Optimality of the support-confidence border")
+    sns.scatterplot(x = "Support", y = "Confidence", 
+                   size = "Lift", data = rules)#.set(title="Optimality of the support-confidence border")
 
     plt.margins(0.01,0.01)
     #st.write("**Optimality of the support-confidence border**")
