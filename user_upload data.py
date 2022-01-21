@@ -31,7 +31,7 @@ def st_csv_download_button(df):
 
 #st_csv_download_button(data)    
 #check1 = st.sidebar.button("sample template")
-st.set_wide_mode()
+#st.set_wide_mode()
 st.markdown(""" <style> .font {
 font-size:50px ; font-family: 'calibri'; color: #0094cb;} 
 </style> """, unsafe_allow_html=True)
