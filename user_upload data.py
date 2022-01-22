@@ -1,202 +1,298 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from apyori import apriori
-from datetime import datetime
-from mlxtend.frequent_patterns import apriori, association_rules
-from PIL import Image
-from io import BytesIO
-import xlsxwriter
-import base64
+import os
 import matplotlib.pyplot as plt
-import seaborn as sns
-#from st_aggrid import AgGrid
-#import plotly.express as px
+import altair as alt
+# from matplotlib import pyplot as plt
+import math
 
+import pandas as pd
+from datetime import datetime, timedelta
 
-# In[15]:
+from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+import pmdarima as pm
 
-image = Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_1_.jpg')
-image1=Image.open('WhatsApp-Image-2021-12-23-at-3.05.01-PM-_2_.jpg')
-first,center,last=st.columns(3)
-first.image(image)
-center.write("")
-last.image(image1)
-data=pd.read_csv("analysis data.csv")
-def st_csv_download_button(df):
-    csv = df.to_csv(index=False) #if no filename is given, a string is returned
-    b64 = base64.b64encode(csv.encode()).decode()
-    href = f'<a href="data:file/csv;base64,{b64}">Download Sample Template</a>'
-    st.sidebar.markdown(href, unsafe_allow_html=True)  
+date_data = pd.read_csv("./Date_data.csv")
 
-#st_csv_download_button(data)    
-#check1 = st.sidebar.button("sample template")
-#st.set_wide_mode()
-st.markdown(""" <style> .font {
-font-size:50px ; font-family: 'calibri'; color: #0094cb;} 
-</style> """, unsafe_allow_html=True)
-st.markdown('<p class="font">Market Basket Analysis</p>', unsafe_allow_html=True)
-#st.title('Market Basket Analysis')
-#st.markdown(""" <style> .font {
-#font-size:11px ; font-family: 'calibri'; color: #f48220;} 
-#</style> """, unsafe_allow_html=True)
-#st.markdown('<p class="font">Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.</p>', unsafe_allow_html=True)
-st.write("Market basket analysis is a data mining technique used by retailers to increase sales by better understanding customer purchasing patterns. It involves analyzing large data sets, such as purchase history, to reveal product groupings, as well as products that are likely to be purchased together.")
-st.write("----------------------------------------------------------------------------------------")
-#st.write("An association rule has two parts: an **antecedent** (if) and a **consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
-#st.write("**consequent**  : item found in combination with the antecedent")
-#st.write("**support**     : Support is an indication of how frequently the items appear in the data. It refers to how often a given rule appears in the database being mined.")
-#st.write("**confidence**  : Confidence indicates the number of times the if-then statements are found true.Confidence refers to the amount of times a given rule turns out to be true in practice. A rule may show a strong correlation in a data set because it appears very often but may occur far less when applied. This would be a case of high support, but low confidence.Conversely, a rule might not particularly stand out in a data set, but continued analysis shows that it occurs very frequently. This would be a case of high confidence and low support. Using these measures helps analysts separate causation from correlation, and allows them to properly value a given rule. ")
-#st.write("**lift**        : lift can be used to compare confidence with expected confidence, or how many times an if-then statement is expected to be found true. It is the ratio of confidence to support. If the lift value is a negative value, then there is a negative correlation between datapoints. If the value is positive, there is a positive correlation, and if the ratio equals 1, then there is no correlation.")
-#if check1:
- #       st.write(data.head(10))
-new={'PN':"diamond pendant",
-'RN':"diamond ring",
-'BT':"diamond bracelet",
-'ER':"diamond earring",
-'BN':"diamond bangle",
-'NK':"diamond necklace",
-'BR':"gold bracelet",
-'GB':"gold bracelet",
-'GN':"diamond necklae",
-'REP':"jewellery repairing",
-'CUF':"diamond cufflink",
-'GBT':"gold bracelet with color stone",
-'DIA':"gold chain",
-'AN':"diamond anklet", 
-'GE':"gold earring",
-'SUT':"diamond suiti",
-'GPN':"gold pendant with colour stone",
-'GER':"gold earring",
-'RP':"platinum ring",
-'GNK':"gold necklace",
-'NP':"nose pin", 
-'GBNC':'gold bangle with colour stone',
-'GHN':"gold hand chain",
-'BRCH':"gold brooch",
-'GP':"gold pendant",
-'JEW':"gold chain",
-'GRN':"gold ring with color stone",
-'CRN':"diamond crown",
-'HC':"hand chain",
-'DJEW':"cufflink", 
-'BB':"diamond belly button"}
+# main csv file
+main_data_file = st.sidebar.file_uploader("Upload Main CSV", type=["csv"])
+# holiday csv file
+data_file = st.sidebar.file_uploader("Upload Holiday CSV", type=["csv"])
 
-upload_file=st.sidebar.file_uploader(label="Upload your csv or excel file",type=["csv","xlsx"])
-st_csv_download_button(data)  
-global df
-if upload_file is not None:
-    print(upload_file)
-    print('hello')
-    try:
-        df = pd.read_csv(upload_file)
-    except Exception as e:
-        print(e)
-     
+sales_type = st.sidebar.radio(
+    "Select Sales",
+    ('Daily', 'Monthly')
+    )
+if not (main_data_file is not None and data_file is not None):
+    st.error("Please upload both the files.")
+
+else:
+    main_file_details = {"filename":main_data_file.name, "filetype":main_data_file.type,
+                            "filesize":main_data_file.size}
+    # st.write(main_file_details)
+    all_data = pd.read_csv(main_data_file)
+    # st.dataframe(all_data)
+    file_details = {"filename":data_file.name, "filetype":data_file.type,
+                            "filesize":data_file.size}
+    # st.write(file_details)
+    holiday_data = pd.read_csv(data_file)
+    # st.dataframe(holiday_data)
     
+    # selection between sarima and arima
+    sel_type = st.sidebar.radio(
+    "Select between SARIMA or ARIMA",
+    ('ARIMA', 'SARIMA')
+    )
 
-    df["Design"]= df.Design.str.lower()
-    df["Design"]=df["Design"].astype('category')
-    df=df.replace({'Category_Code':new})
-    df['Design'] = np.where(df['Design']== "diamond",df["Category_Code"] , df['Design'])
-    df["QUANTITY"]=1
-    df2=df[["VOCNO","Design",'QUANTITY']]
+    rima_type = st.sidebar.radio("Select " + str(sel_type), ('Monthly', 'Daily')
+        )
+    # Creating a dictionary
+    input_dict={"sales_value_per_unit":[1,100000],"DIVISION_CODE":['M','D'],"DESIGN_CODE":['CORE','SHEMMESSIAN','MDI-M','BELBAK-M'],"CATEGORY_CODE":['RN','PN','ER'],
+               "COLLECTION":['SOLITAIRE'],"BRANCH_CODE":['DM','MOE','SOFITL','MCC'], "CATCOLL_CODE":["RN_TWINS","RN_DR","BN_INSPIRE"]}
 
-    basket=df2.groupby(["VOCNO","Design"])["QUANTITY"].sum().unstack().reset_index().fillna(0).set_index("VOCNO")
-    basket=pd.DataFrame(basket)
+    # input_dict
+    filter_list=['DIVISION_CODE','DESIGN_CODE','CATEGORY_CODE','COLLECTION','BRANCH_CODE', 'CATCOLL_CODE']
 
-    def encode_unit(x):
-        if x <= 0:
-            return 0
-        if x >= 1:
-            return 1
-    
-    basket_set = basket.applymap(encode_unit)
+    filt = st.sidebar.multiselect("Select a Filter", filter_list, ["CATCOLL_CODE"])
+    if filt:
+        # list_filt = []
+        for filter in filt:
+        #     print(len(all_data_2))
+            all_data_2=all_data.copy()
+            all_data_int=all_data_2[all_data_2[filter].isin(input_dict[filter])]
+            all_data_2=all_data_int
+        #     print(len(all_data_2))
+            # st.write(filter,"FILTER DONE") 
+        ##################################################
+        # st.dataframe(all_data_2)
 
-    frequent_itemsets = apriori(basket_set, min_support=0.08, use_colnames=True)
-    
-    def rules_to_coordinates(rules):
-        rules['antecedent'] = rules['antecedents'].apply(lambda antecedent: list(antecedent)[0])
-        rules['consequent'] = rules['consequents'].apply(lambda consequent: list(consequent)[0])
-        rules['rule'] = rules.index
-        return rules[['antecedent','consequent','rule']]
+        ## Daily Sales
 
-#print (frequent_itemsets)
-    rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
-    rules["antecedents"] = rules["antecedents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
-    rules["consequents"] = rules["consequents"].apply(lambda x: ', '.join(list(x))).astype("unicode")
-    rules=rules.head(40)
-    rules= rules.sort_values(by = 'confidence', ascending = False)
-    #rules.columns = map(str.upper, rules.columns)
-    rules.columns =["Antecedents","Consequents",'AntecedentSupport','ConsequentSupport',"Support","Confidence","Lift","Leverage","Conviction"]
-    rules= rules.iloc[:, :-2]
-    
-    #rules=rules.style.set_properties(subset=rules.columns, **{'text-align':'left','font-family': 'calibri','font-size': '10px'})
-    #rules = rules.style.set_properties(**{
-     #       'background-color': 'grey',
-      #      'font-size': '10pt',
-    #})
-    #def colfix(df, L=5):
-    #    return df.rename(columns=lambda x: ' '.join(x.replace('_', ' ')[i:i+L] for i in range(0,len(x),L)) if df[x].dtype in ['float64','int64'] else x )
+        all_data_3=all_data_2[["Date","Sales_quantity"]].groupby("Date").sum().sort_values("Sales_quantity").reset_index()
+        all_data_4 = date_data.merge(all_data_3,how="left",on="Date")
+        all_data_4=all_data_4[["Date","Sales_quantity"]]
+        all_data_4=all_data_4.fillna(0)
+        # all_data_4
+        all_data_5=all_data_4.merge(holiday_data,how="left",on="Date")
+        all_data_5=all_data_5[["Date","Sales_quantity","StartDate","EndDate"]]
+        all_data_5=all_data_5.ffill()
+        # all_data_5
 
-    #colfix(rules)
-    #rules.style.set_table_styles([dict(selector="th",props=[('max-width', '30px')])])
-    #AgGrid(rules, fit_columns_on_grid_load=True)
-    
-    st.markdown(
-    """<style>
-        .dataframe {text-align: left !important}
-    </style>
-    """, unsafe_allow_html=True) 
-    
-#frequent_itemsets
+        all_data_5=all_data_5.fillna("01-01-2014") 
+        all_data_5["Date"]=pd.to_datetime(all_data_5['Date'], format='%d-%m-%Y')
+        all_data_5["StartDate"]=pd.to_datetime(all_data_5['StartDate'], format='%d-%m-%Y')
+        all_data_5["EndDate"]=pd.to_datetime(all_data_5['EndDate'], format='%d-%m-%Y')
 
-# In[16]:
+        # Holiday
+        all_data_5["Date_Flag"] = np.where((all_data_5["Date"]>=all_data_5["StartDate"]) & (all_data_5["Date"]<=all_data_5["EndDate"]),1,0)
+        all_data_5['Date_Flag'].value_counts()
+        all_data_5.columns=['Date', 'Sales', 'StartDate', 'EndDate', 'Holiday_Flag']
+        
+        # st.dataframe(all_data_5)
+
+        ###### Daily Data
+
+        Daily_Data = all_data_5[['Date','Sales']]
+        Daily_Data=Daily_Data.set_index('Date')  
+
+        ###### Monthly Data
+        Monthly_Data=pd.DataFrame(Daily_Data.groupby(by=[Daily_Data.index.year,Daily_Data.index.month])["Sales"].sum())
+        Monthly_Data.reset_index(level=1,inplace=True)
+
+        Monthly_Data.columns=["Month","Sales"]
+        Monthly_Data.reset_index(inplace=True)
+        Monthly_Data.columns=["Year","Month","Sales"]
+        Monthly_Data['Date']="01-"+Monthly_Data['Month'].astype(str)+"-"+Monthly_Data['Year'].astype(str)
+        Monthly_Data["Date"]=pd.to_datetime(Monthly_Data['Date'], format='%d-%m-%Y')
+        Monthly_Data=Monthly_Data[["Date","Sales"]]
+        Monthly_Data=Monthly_Data.set_index('Date')
+        
+        if sales_type == 'Daily':
+            st.write("# Sales Data")
+            fig, ax = plt.subplots()
+            ax.plot(Daily_Data["Sales"])
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Sales')
+            ax.set_title('Daily Time Series Plot')
+            st.pyplot(fig)
+
+        if sales_type == 'Monthly':
+            st.write("# Sales Data")
+            fig, ax = plt.subplots()
+            ax.plot(Monthly_Data["Sales"])
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Sales')
+            ax.set_title('Monthly Time Series Plot')
+            st.pyplot(fig)  
+
+        if sel_type == 'ARIMA':
+            if rima_type == 'Daily':
+                daily_train_df=Daily_Data.head(2000)
+                daily_test_df=Daily_Data.tail(189)
+
+                daily_train = daily_train_df["Sales"]
+                daily_test = daily_test_df["Sales"]
+                # fitting a stepwise model:
+                rs_fit = pm.auto_arima(daily_train, start_p=1, start_q=1, max_p=3, max_q=3, m=12,
+                                       start_P=0, seasonal=False, d=1, D=1, trace=True,
+                                       n_jobs=-1,  # We can run this in parallel by controlling this option
+                                       error_action='ignore',  # don't want to know if an order does not work
+                                       suppress_warnings=True,  # don't want convergence warnings
+                                       stepwise=False, random=True, random_state=42,  # we can fit a random search (not exhaustive)
+                                       n_fits=10)
 
 
-    st.write(rules)
-    st.write("----------------------------------------------------------------------------------------")
-    from pandas.plotting import parallel_coordinates
+                daily_predictions = rs_fit.predict(n_periods=189)
+                daily_predictions_1=[math.ceil(i) if i>0 else 0 for i in daily_predictions]
+                daily_test_df["Predictions"]=daily_predictions_1
 
-    # Compute the frequent itemsets
-    #frequent_itemsets = apriori(onehot, min_support = 0.15, 
-    #                           use_colnames = True, max_len = 2)
+                fig, ax = plt.subplots()
+                ax.plot(daily_train, label='training')
+                ax.plot(daily_test, label='actual')
+                ax.plot(daily_test_df['Predictions'], label='forecast')
+                # plt.fill_between(lower_series.index, lower_series, upper_series, 
+                #                  color='k', alpha=.15)
+                ax.set_title('Forecast vs Actuals')
+                legend = ax.legend(loc='upper left', fontsize=8)
 
-    # Compute rules from the frequent itemsets
-    rules = association_rules(frequent_itemsets, metric = 'confidence', 
-                              min_threshold = 0.55)
 
-    # Convert rules into coordinates suitable for use in a parallel coordinates plot
-    coords = rules_to_coordinates(rules.head(40))
+                # plt.show()
+                st.pyplot(fig)
 
-    # Generate parallel coordinates plot
-    
-    fig=plt.figure(figsize=(4,7))
-    parallel_coordinates(coords, 'rule')
-    plt.legend([])
-    plt.grid(True)
-    plt.title(' Parallel coordinates to visualize rules', fontsize=15,color="#0094cb",loc='left')
-    #st.write("**parallel coordinates to visualize rules**")
-    st.write(" ")
-    st.pyplot(fig)
-    st.write(" ")
-    st.write(" ")
-    st.write("----------------------------------------------------------------- ")
-    
-    fig2=plt.figure(figsize=(12,7))
-    #plt.title('Left Title', loc='left')
-    plt.title('Optimality of the support-confidence border ', fontsize=25,color="#0094cb",loc='left')
-    sns.scatterplot(x = "support", y = "confidence", 
-                   size = "lift", data = rules)#.set(title="Optimality of the support-confidence border")
+                final_df=pd.DataFrame(daily_test_df.groupby(by=[daily_test_df.index.year,daily_test_df.index.month])[["Sales","Predictions"]].sum())
+                final_df.reset_index(level=1,inplace=True)
 
-    plt.margins(0.01,0.01)
-    #st.write("**Optimality of the support-confidence border**")
-    st.write(" ")
-    st.pyplot(fig2)
-    
-    st.write("An association rule has two parts: an **Antecedent** (if) and a **Consequent** (then). An antecedent is an item found within the data. A consequent is an item found in combination with the antecedent. ... Association rules are calculated from itemsets, which are made up of two or more items.")
-    #st.write("**Consequent**  : item found in combination with the antecedent")
-    st.write("**Support**     : Support is an indication of how frequently the items appear in the data. It refers to how often a given rule appears in the database being mined.")
-    st.write("**Confidence**  : Confidence indicates the number of times the if-then statements are found true.Confidence refers to the amount of times a given rule turns out to be true in practice. A rule may show a strong correlation in a data set because it appears very often but may occur far less when applied. This would be a case of high support, but low confidence.Conversely, a rule might not particularly stand out in a data set, but continued analysis shows that it occurs very frequently. This would be a case of high confidence and low support. Using these measures helps analysts separate causation from correlation, and allows them to properly value a given rule. ")
-    st.write("**Lift**        : lift can be used to compare confidence with expected confidence, or how many times an if-then statement is expected to be found true. It is the ratio of confidence to support. If the lift value is a negative value, then there is a negative correlation between datapoints. If the value is positive, there is a positive correlation, and if the ratio equals 1, then there is no correlation.")
+                final_df.columns=["Month","Sales","Predictions"]
+                final_df["Lower"]=0.95*final_df["Predictions"]
+                final_df["Upper"]=1.05*final_df["Predictions"]
+                final_df["Monthly_Accuracy"]=100-np.abs((final_df["Predictions"]-final_df["Sales"])*100/final_df["Sales"])
+                final_df.reset_index(inplace=True)
+                st.dataframe(final_df, 900, 900)
 
+            if rima_type == 'Monthly':
+                monthly_train_df=Monthly_Data.head(60)
+                monthly_test_df=Monthly_Data.tail(12)
+
+                monthly_train = monthly_train_df["Sales"]
+                monthly_test = monthly_test_df["Sales"]
+                # fitting a stepwise model:
+                rs_fit = pm.auto_arima(monthly_train, start_p=1, start_q=1, max_p=3, max_q=3, m=12,
+                                       start_P=0, seasonal=False, d=1, D=1, trace=True,
+                                       n_jobs=-1,  # We can run this in parallel by controlling this option
+                                       error_action='ignore',  # don't want to know if an order does not work
+                                       suppress_warnings=True,  # don't want convergence warnings
+                                       stepwise=False, random=True, random_state=42,  # we can fit a random search (not exhaustive)
+                                       n_fits=10)
+
+
+                monthly_predictions = rs_fit.predict(n_periods=12)
+                
+                monthly_predictions_1=[math.ceil(i) if i>0 else 0 for i in monthly_predictions]
+                monthly_test_df["Predictions"]=monthly_predictions_1
+
+                fig, ax = plt.subplots()
+                ax.plot(monthly_train, label='training')
+                ax.plot(monthly_test, label='actual')
+                ax.plot(monthly_test_df['Predictions'], label='forecast')
+                # plt.fill_between(lower_series.index, lower_series, upper_series, 
+                #                  color='k', alpha=.15)
+                ax.set_title('Forecast vs Actuals')
+                legend = ax.legend(loc='upper left', fontsize=8)
+
+                # plt.show()
+                st.pyplot(fig)
+
+                final_df=monthly_test_df
+                # final_df.columns=["Year","Month","Sales","Predictions"]
+                final_df["Lower"]=0.95*final_df["Predictions"]
+                final_df["Upper"]=1.05*final_df["Predictions"]
+                final_df["Monthly_Accuracy"]=100-np.abs((final_df["Predictions"]-final_df["Sales"])*100/final_df["Sales"])
+                st.dataframe(final_df, 900, 900)
+
+
+
+
+        if sel_type == 'SARIMA':
+            if rima_type == 'Daily':
+                daily_train_df=Daily_Data.head(2000)
+                daily_test_df=Daily_Data.tail(189)
+
+                daily_train = daily_train_df["Sales"]
+                daily_test = daily_test_df["Sales"]
+                # fitting a stepwise model:
+                rs_fit = pm.auto_arima(daily_train, start_p=1, start_q=1, max_p=3, max_q=3, m=12,
+                                       start_P=0, seasonal=True, d=1, D=1, trace=True,
+                                       n_jobs=-1,  # We can run this in parallel by controlling this option
+                                       error_action='ignore',  # don't want to know if an order does not work
+                                       suppress_warnings=True,  # don't want convergence warnings
+                                       stepwise=False, random=True, random_state=42,  # we can fit a random search (not exhaustive)
+                                       n_fits=10)
+
+
+                daily_predictions = rs_fit.predict(n_periods=189)
+
+                daily_predictions_1=[math.ceil(i) if i>0 else 0 for i in daily_predictions]
+                daily_test_df["Predictions"]=daily_predictions_1
+
+                fig, ax = plt.subplots()
+                ax.plot(daily_train, label='training')
+                ax.plot(daily_test, label='actual')
+                ax.plot(daily_test_df['Predictions'], label='forecast')
+                # plt.fill_between(lower_series.index, lower_series, upper_series, 
+                #                  color='k', alpha=.15)
+                ax.set_title('Forecast vs Actuals')
+                legend = ax.legend(loc='upper left', fontsize=8)
+
+                final_df=pd.DataFrame(daily_test_df.groupby(by=[daily_test_df.index.year,daily_test_df.index.month])[["Sales","Predictions"]].sum())
+                final_df.reset_index(level=1,inplace=True)
+
+                final_df.columns=["Month","Sales","Predictions"]
+                final_df["Lower"]=0.95*final_df["Predictions"]
+                final_df["Upper"]=1.05*final_df["Predictions"]
+                final_df["Monthly_Accuracy"]=100-np.abs((final_df["Predictions"]-final_df["Sales"])*100/final_df["Sales"])
+                final_df.reset_index(inplace=True)
+                st.dataframe(final_df, 900, 900)
+
+            if rima_type == 'Monthly':
+                monthly_train_df=Monthly_Data.head(60)
+                monthly_test_df=Monthly_Data.tail(12)
+
+                monthly_train = monthly_train_df["Sales"]
+                monthly_test = monthly_test_df["Sales"]
+                # fitting a stepwise model:
+                rs_fit = pm.auto_arima(monthly_train, start_p=1, start_q=1, max_p=3, max_q=3, m=12,
+                                       start_P=0, seasonal=True, d=1, D=1, trace=True,
+                                       n_jobs=-1,  # We can run this in parallel by controlling this option
+                                       error_action='ignore',  # don't want to know if an order does not work
+                                       suppress_warnings=True,  # don't want convergence warnings
+                                       stepwise=False, random=True, random_state=42,  # we can fit a random search (not exhaustive)
+                                       n_fits=10)
+
+
+                monthly_predictions = rs_fit.predict(n_periods=12)
+
+                monthly_predictions_1=[math.ceil(i) if i>0 else 0 for i in monthly_predictions]
+                monthly_test_df["Predictions"]=monthly_predictions_1
+
+                fig, ax = plt.subplots()
+                ax.plot(monthly_train, label='training')
+                ax.plot(monthly_test, label='actual')
+                ax.plot(monthly_test_df['Predictions'], label='forecast')
+                # plt.fill_between(lower_series.index, lower_series, upper_series, 
+                #                  color='k', alpha=.15)
+                ax.set_title('Forecast vs Actuals')
+                legend = ax.legend(loc='upper left', fontsize=8)
+
+                # plt.show()
+                st.pyplot(fig)
+
+                final_df=monthly_test_df
+                # final_df.columns=["Year","Month","Sales","Predictions"]
+                final_df["Lower"]=0.95*final_df["Predictions"]
+                final_df["Upper"]=1.05*final_df["Predictions"]
+                final_df["Monthly_Accuracy"]=100-np.abs((final_df["Predictions"]-final_df["Sales"])*100/final_df["Sales"])
+                st.dataframe(final_df, 900, 900)
+    else:
+        st.error("Please select at least one filter.")
