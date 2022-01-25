@@ -15,7 +15,7 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 import pmdarima as pm
 from urllib.error import URLError
 
-date_data = pd.read_csv("./Date_data.csv")
+date_data = pd.read_csv("Date_data.csv")
 
 # main csv file
 main_data_file = st.sidebar.file_uploader("Upload Main CSV", type=["csv"])
