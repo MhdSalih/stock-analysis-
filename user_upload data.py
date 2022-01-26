@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 import pmdarima as pm
 from urllib.error import URLError
 
-date_data = pd.read_csv("./Date_data.csv")
+date_data = pd.read_csv("Date_data.csv")
 
 file1, file2 = st.sidebar.columns(2) # to align the input box 
 
